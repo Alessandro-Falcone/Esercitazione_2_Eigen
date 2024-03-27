@@ -4,12 +4,6 @@
 using namespace std;
 using namespace Eigen;
 
-// funzione che trova la soluzione reale del sistema Ax = b
-// ritorna l'errore relativo per la soluzione con la fattorizzazione PALU
-// ritorna l'errore relativo per la soluzione con la fattorizzazione QR
-void testSoluzione(const MatrixXd& A, const VectorXd& b, const VectorXd& soluzione,
-                  double& errRelPALU, double& errRelQR);
-
 // risolve il sistema lineare con la fattorizzazione PALU
 VectorXd soluzioneSistemaPALU(const MatrixXd& A, const VectorXd& b){
 
@@ -26,6 +20,27 @@ VectorXd soluzioneSistemaQR(const MatrixXd& A, const VectorXd& b){
 
     // ritorna la soluzione
     return xQR;
+}
+
+// funzione che trova la soluzione reale del sistema Ax = b
+// ritorna l'errore relativo per la soluzione con la fattorizzazione PALU
+// ritorna l'errore relativo per la soluzione con la fattorizzazione QR
+void testSoluzione(const MatrixXd& A, const VectorXd& b, const VectorXd& soluzione,
+                   double& errRelPALU, double& errRelQR){
+
+
+    errRelPALU = numeric_limits<double>::max(); // massimo valore che può assumere un double
+    cout << "errore massimo PALU: " << errRelPALU << "\n";
+    errRelQR = numeric_limits<double>::max(); // massimo valore che può assumere un double
+    cout << "errore massimo QR: " << errRelQR << "\n";
+
+    // soluzioneSistemaPALU(A,b)
+
+    errRelPALU = (soluzioneSistemaPALU(A,b)-soluzione).norm() / soluzioneSistemaPALU(A,b).norm(); // errore relativo per fattorizzazione PALU
+
+    // soluzioneSistemaQR(A,b)
+
+    errRelQR = (soluzioneSistemaQR(A,b)-soluzione).norm() / soluzioneSistemaQR(A,b).norm(); // errore relativo per fattorizzazione QR
 }
 
 int main(){
@@ -98,20 +113,4 @@ int main(){
     return 0;
 }
 
-void testSoluzione(const MatrixXd& A, const VectorXd& b, const VectorXd& soluzione,
-                  double& errRelPALU, double& errRelQR){
 
-    errRelPALU = numeric_limits<double>::max(); // massimo valore che può assumere un double
-    cout << "errore massimo PALU: " << errRelPALU << "\n";
-    errRelQR = numeric_limits<double>::max(); // massimo valore che può assumere un double
-     cout << "errore massimo QR: " << errRelQR << "\n";
-
-    // soluzioneSistemaPALU(A,b)
-
-    errRelPALU = (soluzioneSistemaPALU(A,b)-soluzione).norm() / soluzione.norm(); // errore relativo per fattorizzazione PALU
-
-    // soluzioneSistemaQR(A,b)
-
-    errRelQR = (soluzioneSistemaQR(A,b)-soluzione).norm() / soluzione.norm(); // errore relativo per fattorizzazione QR
-
-}
