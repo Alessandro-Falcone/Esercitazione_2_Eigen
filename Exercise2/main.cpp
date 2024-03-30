@@ -4,21 +4,21 @@
 using namespace std;
 using namespace Eigen;
 
-// risolve il sistema lineare con la fattorizzazione PALU
+// funzione che risolve il sistema lineare con la fattorizzazione PALU
 VectorXd soluzioneSistemaPALU(const MatrixXd& A, const VectorXd& b){
 
     Vector2d xPALU = A.fullPivLu().solve(b);
 
-    // ritorna la soluzione
+    // ritorna la soluzione del sistema
     return xPALU;
 }
 
-// risolve il sistema lineare con la fattorizzazione QR
+// funzione che risolve il sistema lineare con la fattorizzazione QR
 VectorXd soluzioneSistemaQR(const MatrixXd& A, const VectorXd& b){
 
     Vector2d xQR = A.fullPivHouseholderQr().solve(b);
 
-    // ritorna la soluzione
+    // ritorna la soluzione del sistema
     return xQR;
 }
 
