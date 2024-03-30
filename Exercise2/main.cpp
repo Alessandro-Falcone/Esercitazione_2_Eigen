@@ -23,8 +23,8 @@ VectorXd soluzioneSistemaQR(const MatrixXd& A, const VectorXd& b){
 }
 
 // funzione che trova la soluzione effettiva del sistema Ax = b
-// ritorna l'errore relativo per la soluzione con la fattorizzazione PALU
-// ritorna l'errore relativo per la soluzione con la fattorizzazione QR
+// ritorna l'errore relativo per la fattorizzazione PALU
+// ritorna l'errore relativo per la fattorizzazione QR
 void testSoluzione(const MatrixXd& A, const VectorXd& b, const VectorXd& soluzione,
                    double& errRelPALU, double& errRelQR){
 
@@ -90,7 +90,7 @@ int main(){
 
     }else{
         cerr << "2-soluzione errata del secondo sistema" << endl;
-        return 2;
+        return 1;
     }
 
     if (errRel3PALU < 1e-5 && errRel3QR < 1e-5){ // condizione sulla tolleranza del terzo sistema
@@ -99,7 +99,7 @@ int main(){
 
     }else{
         cerr << "3-soluzione errata del terzo sistema" << endl;
-        return 3;
+        return 1;
     }
 
     return 0;
